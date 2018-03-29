@@ -1,6 +1,7 @@
 from sklearn.base import BaseEstimator, TransformerMixin
 import numpy as np
 import matplotlib.pyplot as plt
+import pandas as pd
 
 
 class Regressors(BaseEstimator, TransformerMixin):
@@ -60,7 +61,7 @@ class Regressors(BaseEstimator, TransformerMixin):
         return best_pred
 
 
-def traintest(data, targets, test_data, test_targets, onlyOffline=True):
+def traintest(data, targets, test_data, test_targets, logger, pdf_name, var='Titer', onlyOffline=True):
 
     from sklearn.feature_selection import mutual_info_regression, SelectKBest
     from sklearn.decomposition import PCA
@@ -68,10 +69,10 @@ def traintest(data, targets, test_data, test_targets, onlyOffline=True):
     from sklearn.metrics import mean_squared_error
 
     if onlyOffline:
-        print("\nOFFLINE DATA\n")
+        logger.info("\nOFFLINE DATA\n")
 
     else:
-        print("\nOFFLINE + INTERPOLATED DATA\n")
+        logger.info("\nOFFLINE + INTERPOLATED DATA\n")
 
     pca = PCA(n_components=20)
     univ_selector = SelectKBest(mutual_info_regression, k=30)
@@ -90,6 +91,8 @@ def traintest(data, targets, test_data, test_targets, onlyOffline=True):
     cross_val_scores = list()
 
     for i in range(cv):
+        logger.info("\n Cross Validation Fold No. {}".format(i + 1))
+
         new_train = list(train_folds)
         new_test = new_train.pop(i)
 
@@ -106,9 +109,6 @@ def traintest(data, targets, test_data, test_targets, onlyOffline=True):
         pred = estimator.predict(new_test)
         cross_val_scores.append(rmse_score(pred, target_test))
 
-    print("The Cross Validation Score is: {0:.3f} +/- {0:.3f}".format(np.mean(cross_val_scores),
-                                                                      np.std(cross_val_scores)))
-
     pca = PCA(n_components=20)
     univ_selector = SelectKBest(mutual_info_regression, k=30)
     feature_selector = FeatureUnion([("pca", pca), ("univ_selector", univ_selector)])
@@ -116,13 +116,47 @@ def traintest(data, targets, test_data, test_targets, onlyOffline=True):
 
     pipe = Pipeline([("feature_selection", feature_selector), ("Regressor List", estimator)])
     pipe.fit(data, y=targets)
+
+    logger.info("\n Testing")
     pred = pipe.predict(test_data)
     error = rmse_score(test_targets, pred)
-    print("The test error is: {0:.3f}".format(error))
 
     x_range = range(len(pred))
-    plt.title('Predicted Values for Test Data')
+    plt.title('Predicted Values for Test Data for variable {}'.format(var))
     plt.plot(x_range, pred, 'r')
     plt.plot(x_range, test_targets, 'b')
     plt.legend(['Predicted Values', 'Actual Values'])
-    plt.show()
+    plt.savefig(pdf_name, format='pdf')
+
+    def render_mpl_table(data, col_width=3.0, row_height=0.625, font_size=14,
+                         header_color='#40466e', row_colors=['#f1f1f2', 'w'], edge_color='w',
+                         bbox=[0, 0, 1, 1], header_columns=0,
+                         ax=None, **kwargs):
+        if ax is None:
+            size = (np.array(data.shape[::-1]) + np.array([0, 1])) * np.array([col_width, row_height])
+            fig, ax = plt.subplots(figsize=size)
+            ax.axis('off')
+
+        mpl_table = ax.table(cellText=data.values, bbox=bbox, colLabels=data.columns, **kwargs)
+
+        mpl_table.auto_set_font_size(False)
+        mpl_table.set_fontsize(font_size)
+
+        for k, cell in six.iteritems(mpl_table._cells):
+            cell.set_edgecolor(edge_color)
+            if k[0] == 0 or k[1] < header_columns:
+                cell.set_text_props(weight='bold', color='w')
+                cell.set_facecolor(header_color)
+            else:
+                cell.set_facecolor(row_colors[k[0] % len(row_colors)])
+        return ax
+
+    import six
+    df = pd.DataFrame()
+    df['Variable'] = [var + '      ']
+    df['RMSE-CV'] = ["{0:.3f} +/- {0:.3f}".format(np.mean(cross_val_scores), np.std(cross_val_scores))]
+    df['RMSE-Test'] = ["{0:.3f}      ".format(error)]
+
+    ax = render_mpl_table(df, header_columns=0, col_width=3.0)
+    plt.savefig(pdf_name, format='pdf')
+
