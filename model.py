@@ -104,7 +104,7 @@ def traintest(data, targets, test_data, test_targets, logger, pdf_name, var='Tit
         new_train = feature_selector.fit_transform(np.concatenate(new_train), target_train)
         new_test = feature_selector.transform(np.array(new_test))
 
-        estimator = Regressors(y_test=target_test)
+        estimator = Regressors(y_test=target_test, logger=logger)
         estimator.fit(new_train, target_train)
 
         pred = estimator.predict(new_test)
