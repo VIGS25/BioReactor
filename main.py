@@ -9,7 +9,7 @@ import logging
 data_dir = sys.path[0] + '\\Aligned + Interpolated Data\\'
 
 # Change to False if you want to use interpolated Data
-onlyOffline = False
+onlyOffline = True
 
 if onlyOffline:
     output_pdf = sys.path[0] + '\\Results\\BioReactor_Offline' + '.pdf'
