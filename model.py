@@ -6,7 +6,7 @@ import pandas as pd
 
 class Regressors(BaseEstimator, TransformerMixin):
 
-    def __init__(self, y_test):
+    def __init__(self, y_test, logger):
 
         from sklearn.cross_decomposition import PLSRegression
         from sklearn.tree import DecisionTreeRegressor
@@ -31,6 +31,7 @@ class Regressors(BaseEstimator, TransformerMixin):
         self.best_model_index = None
         self.best_error = None
         self.y_test = y_test
+        self.logger = logger
 
     def fit(self, X, y):
 
@@ -54,9 +55,9 @@ class Regressors(BaseEstimator, TransformerMixin):
                 best_pred = y_pred
                 self.best_model_index = i
 
-        print("The best model is: ", self.regressors[self.best_model_index],
-              " with an rmse of {0:.4f}".format(self.best_err))
-        print("\n")
+        self.logger.info("The best model is: {}".format(self.regressors[self.best_model_index]))
+        self.logger.info("The model has an rmse of {0:.4f}".format(self.best_err))
+        self.logger.info("\n")
 
         return best_pred
 
@@ -112,7 +113,7 @@ def traintest(data, targets, test_data, test_targets, logger, pdf_name, var='Tit
     pca = PCA(n_components=20)
     univ_selector = SelectKBest(mutual_info_regression, k=30)
     feature_selector = FeatureUnion([("pca", pca), ("univ_selector", univ_selector)])
-    estimator = Regressors(y_test=test_targets)
+    estimator = Regressors(y_test=test_targets, logger=logger)
 
     pipe = Pipeline([("feature_selection", feature_selector), ("Regressor List", estimator)])
     pipe.fit(data, y=targets)
