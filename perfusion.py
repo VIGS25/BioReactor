@@ -22,7 +22,7 @@ class perfusionProcessor(object):
 
     """
 
-    def __init__(self, data_dir, dataFiles, colnames=None, output_dir=None):
+    def __init__(self, data_dir, dataFiles, logger, colnames=None, output_dir=None):
 
         self.data_dir = data_dir
         self.dataFiles = [file.split('.')[0] for file in dataFiles]
@@ -33,22 +33,21 @@ class perfusionProcessor(object):
         else:
             self.output_dir = '\\'.join(data_dir.split('\\')[:-2]) + '\\Results\\'
 
-        self._load_data()
+        self._load_data(logger)
         self._rename_columns(col_names=colnames)
         self._get_offlineIndices()
 
         if not os.path.exists(self.output_dir):
             os.makedirs(self.output_dir)
 
-
-    def _load_data(self):
+    def _load_data(self, logger):
 
         """ Loads all files associated with the perfusion experiment"""
 
         for file in self.dataFiles:
 
             filename = self.data_dir + file + '.xlsx'
-            self.dataFrames[file] = loadDataFrame(filename=filename)
+            self.dataFrames[file] = loadDataFrame(filename=filename, logger=logger)
 
     def _rename_columns(self, col_names=None):
 
