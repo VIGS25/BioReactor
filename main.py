@@ -1,5 +1,3 @@
-import numpy as np
-import os
 import sys
 from BioReactor.utils import loadDataFrame, getDataVar
 from BioReactor.utils import getTrainTestFiles, getData
@@ -10,7 +8,8 @@ import logging
 
 data_dir = sys.path[0] + '\\Aligned + Interpolated Data\\'
 
-onlyOffline = True
+# Change to False if you want to use interpolated Data
+onlyOffline = False
 
 if onlyOffline:
     output_pdf = sys.path[0] + '\\Results\\BioReactor_Offline' + '.pdf'
@@ -40,7 +39,8 @@ def perfusionAnalyzer(data_dir, output_pdf, logger, var_=['Titer'],
 
     dataframes = {}
     for file in dataFiles:
-        dataframes[file] = loadDataFrame(filename=data_dir + file, logger=logger)
+        dataframes[file] = loadDataFrame(filename=data_dir + file,
+                                         logger=logger)
 
     for var in var_:
 
@@ -91,5 +91,6 @@ def perfusionAnalyzer(data_dir, output_pdf, logger, var_=['Titer'],
 if __name__ == "__main__":
     with PdfPages(output_pdf) as pdf:
         perfusionAnalyzer(data_dir=data_dir, var_=['Titer'],
-                          logger=logger, output_pdf=pdf, onlyOffline=onlyOffline)
+                          logger=logger, output_pdf=pdf,
+                          onlyOffline=onlyOffline)
     handler.close()
