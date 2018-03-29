@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 
 
-def loadDataFrame(filename):
+def loadDataFrame(filename, logger):
     """ Loads the file into a pandas dataframe
 
     Args:
@@ -10,9 +10,8 @@ def loadDataFrame(filename):
 
     """
 
-    print("Loading File: ", filename.split('/')[-1])
     dataframe = pd.read_excel(io=filename, header=0, na_values=['[]', '', 'NaN'])
-    print("Finished Loading File: ", filename.split('/')[-1])
+    logger.info("Finished Loading File: {} ".format(filename.split('\\')[-1]))
 
     return dataframe
 
@@ -34,7 +33,8 @@ def getSpectra(dataframe, indices):
     """
 
     colList = dataframe.columns
-    spec_inds = [index for index in range(len(colList)) if colList[index].startswith('Spectrum_')]
+    spec_inds = [index for index in range(len(colList))
+                 if colList[index].startswith('Spectrum_')]
     spec_cols = colList[spec_inds]
 
     spec_vals = dataframe[spec_cols].iloc[indices]
