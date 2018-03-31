@@ -1,15 +1,15 @@
 import sys
-from BioReactor.utils import loadDataFrame, getDataVar
-from BioReactor.utils import getTrainTestFiles, getData
-from BioReactor.utils import preprocessing
-from BioReactor.model import traintest
+from utils import loadDataFrame, getDataVar
+from utils import getTrainTestFiles, getData
+from utils import preprocessing
+from model import traintest
 from matplotlib.backends.backend_pdf import PdfPages
 import logging
 
 data_dir = sys.path[0] + '\\Aligned + Interpolated Data\\'
 
 # Change to False if you want to use interpolated Data
-onlyOffline = True
+onlyOffline = False
 
 if onlyOffline:
     output_pdf = sys.path[0] + '\\Results\\BioReactor_Offline' + '.pdf'
