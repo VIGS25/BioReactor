@@ -14,10 +14,7 @@
 #### Running
 
 * To run the code, download the data files to an appropriate directory
-* Download all *.py files to one directory and run main.py as:
-```
-python main.py
-```
+* Download all *.py files to one directory
 
 * Change the following line in ``main.py`` to the directory where the files are located  
 ```
@@ -43,6 +40,11 @@ NOTE: var_ must always be a list
 * To carry out analysis only using offline data, change the following line in ``main.py``
 ```
 onlyOffline = False
+```
+
+* Run ``main.py`` as:
+```
+python main.py
 ```
 
 * The current program
