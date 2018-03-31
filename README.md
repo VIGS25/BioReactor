@@ -14,7 +14,7 @@
 #### Running
 
 * To run the code, just download the data files to a directory
-* Change the following line in ``main.py`` to the directory where the files are loacted  
+* Change the following line in ``main.py`` to the directory where the files are located  
 ```
 data_dir = sys.path[0] + '\\Aligned + Interpolated Data\\'
 ```
