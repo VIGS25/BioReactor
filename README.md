@@ -21,12 +21,11 @@ data_dir = sys.path[0] + '\\Aligned + Interpolated Data\\'
 
 * Change the following lines in ``main.py`` for saving the results
 ```
-if onlyOffline:
-    output_pdf = sys.path[0] + '\\Results\\BioReactor_Offline' + '.pdf'
-    output_log = sys.path[0] + '\\Results\\BioReactor_Offline' + '.log'
-else:
-    output_pdf = sys.path[0] + '\\Results\\BioReactor_Online' + '.pdf'
-    output_log = sys.path[0] + '\\Results\\BioReactor_Online' + '.log'
+output_pdf = sys.path[0] + '\\Results\\BioReactor_Offline' + '.pdf'
+output_log = sys.path[0] + '\\Results\\BioReactor_Offline' + '.log'
+
+output_pdf = sys.path[0] + '\\Results\\BioReactor_Online' + '.pdf'
+output_log = sys.path[0] + '\\Results\\BioReactor_Online' + '.log'
 ```
 
 * To change the variable for the analysis, edit the ``var_`` variable in the following line in ``main.py``
