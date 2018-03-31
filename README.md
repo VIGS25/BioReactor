@@ -5,8 +5,6 @@
   + Python 3.5+
   + Scikit-Learn
   + Numpy
-  + h5py
-  + openpyxl
   + xgboost
 
 * .xlsx files containing aligned and unaligned spectra
