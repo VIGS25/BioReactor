@@ -16,32 +16,29 @@
 * To run the code, just download the data files to a directory
 * Change the following line in ``main.py`` to the directory where the files are loacted  
 ```
-    data_dir = sys.path[0] + '\\Aligned + Interpolated Data\\'
+data_dir = sys.path[0] + '\\Aligned + Interpolated Data\\'
 ```
 
 * Change the following lines in ``main.py`` for saving the results
-
 ```
-    if onlyOffline:
-        output_pdf = sys.path[0] + '\\Results\\BioReactor_Offline' + '.pdf'
-        output_log = sys.path[0] + '\\Results\\BioReactor_Offline' + '.log'
-    else:
-        output_pdf = sys.path[0] + '\\Results\\BioReactor_Online' + '.pdf'
-        output_log = sys.path[0] + '\\Results\\BioReactor_Online' + '.log'
+if onlyOffline:
+    output_pdf = sys.path[0] + '\\Results\\BioReactor_Offline' + '.pdf'
+    output_log = sys.path[0] + '\\Results\\BioReactor_Offline' + '.log'
+else:
+    output_pdf = sys.path[0] + '\\Results\\BioReactor_Online' + '.pdf'
+    output_log = sys.path[0] + '\\Results\\BioReactor_Online' + '.log'
 ```
 
 * To change the variable for the analysis, edit the ``var_`` variable in the following line in ``main.py``
-
 ```
-    perfusionAnalyzer(data_dir=data_dir, var_=['Titer'],
-                              logger=logger, output_pdf=pdf,
-                              onlyOffline=onlyOffline)
-    NOTE: var_ must always be a list
+perfusionAnalyzer(data_dir=data_dir, var_=['Titer'],
+                          logger=logger, output_pdf=pdf,
+                          onlyOffline=onlyOffline)
+NOTE: var_ must always be a list
 ```
 * To carry out analysis only using offline data, change the following line in ``main.py``
-
 ```
-    onlyOffline = False
+onlyOffline = False
 ```
 
 * The current program
