@@ -23,7 +23,6 @@ data_dir = sys.path[0] + '\\Aligned + Interpolated Data\\'
 ```
 output_pdf = sys.path[0] + '\\Results\\BioReactor_Offline' + '.pdf'
 output_log = sys.path[0] + '\\Results\\BioReactor_Offline' + '.log'
-
 output_pdf = sys.path[0] + '\\Results\\BioReactor_Online' + '.pdf'
 output_log = sys.path[0] + '\\Results\\BioReactor_Online' + '.log'
 
