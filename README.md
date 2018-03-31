@@ -17,9 +17,10 @@
 * Change the following line in ``main.py`` to the directory where the files are loacted  
 ```
 data_dir = sys.path[0] + '\\Aligned + Interpolated Data\\'
-
 ```
+
 * Change the following lines in ``main.py`` for saving the results
+
 ```
 if onlyOffline:
     output_pdf = sys.path[0] + '\\Results\\BioReactor_Offline' + '.pdf'
@@ -28,7 +29,9 @@ else:
     output_pdf = sys.path[0] + '\\Results\\BioReactor_Online' + '.pdf'
     output_log = sys.path[0] + '\\Results\\BioReactor_Online' + '.log'
 ```
+
 * To change the variable for the analysis, edit the var_ variable in the following line
+
 ```
 perfusionAnalyzer(data_dir=data_dir, var_=['Titer'],
                           logger=logger, output_pdf=pdf,
