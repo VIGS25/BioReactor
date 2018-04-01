@@ -5,7 +5,7 @@
   + Python 3.5+
   + Scikit-Learn
   + Numpy
-  + xgboost [Guide used for Installation](https://medium.com/@rakshithvasudev/how-i-installed-xgboost-after-a-lot-of-hassels-on-my-windows-machine-c53e972e801e)
+  + xgboost ([Guide used for Installation](https://medium.com/@rakshithvasudev/how-i-installed-xgboost-after-a-lot-of-hassels-on-my-windows-machine-c53e972e801e))
 
 * .xlsx files containing aligned and unaligned spectra
 
